@@ -14,10 +14,10 @@ class Plan(models.Model):
     ability_to_generate_expiring_links = models.BooleanField(default=False)
 
     def __str__(self):
-    	return self.plan_name
+        return self.plan_name
 
     def get_allowed_sizes(self):
-    	return allowed_sizes.split()
+        return allowed_sizes.split()
 
 
 class UserPlan(models.Model):
@@ -25,8 +25,12 @@ class UserPlan(models.Model):
     Every Client has his own Plan
     """
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="userplan_user"
+    )
+    plan = models.ForeignKey(
+        Plan, on_delete=models.CASCADE, related_name="userplan_plan"
+    )
 
     def __str__(self):
-    	return f"{self.user} || {self.plan}"
+        return f"{self.user} || {self.plan}"

@@ -34,7 +34,9 @@ INSTALLED_APPS = [
     # Libraries
     "rest_framework",
     "corsheaders",
+    # Own apps
     "image_loader.plan",
+    "image_loader.image",
 ]
 
 MIDDLEWARE = [
