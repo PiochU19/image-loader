@@ -8,7 +8,7 @@ class Plan(models.Model):
     Allowed sizes are separeted by spaces
     """
 
-    plan_name = models.CharField(max_length=20)
+    plan_name = models.CharField(max_length=20, unique=True)
     allowed_sizes = models.CharField(max_length=255, default="200")
     acces_to_the_og = models.BooleanField(default=False)
     ability_to_generate_expiring_links = models.BooleanField(default=False)
@@ -17,7 +17,7 @@ class Plan(models.Model):
         return self.plan_name
 
     def get_allowed_sizes(self):
-        return allowed_sizes.split()
+        return self.allowed_sizes.split()
 
 
 class UserPlan(models.Model):
