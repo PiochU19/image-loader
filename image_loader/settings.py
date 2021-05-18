@@ -144,6 +144,8 @@ REST_FRAMEWORK = {
 # Additional settings
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SERVER_PATH = env("SERVER_PATH")
+
 
 # CORS settings
 
