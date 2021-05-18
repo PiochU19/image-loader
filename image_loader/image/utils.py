@@ -4,6 +4,10 @@ from PIL import Image as PillowImage
 
 
 def get_resized_image(memory_uploaded_image, height):
+    """
+    Function returns resized InMemoryUploadedFile
+    which can be saved to the db in the future
+    """
     img = PillowImage.open(memory_uploaded_image)
     og_height, og_width = img.size
     proportions = height / og_height
