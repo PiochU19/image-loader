@@ -1,25 +1,19 @@
 from pathlib import Path
-import environ, os
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Environ settings
-env = environ.Env(DEBUG=(bool, False))
-
-environ.Env.read_env()
-
-
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = env("DEBUG")
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS").split()
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
 
 
 # Application definition
@@ -75,8 +69,12 @@ WSGI_APPLICATION = "image_loader.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -136,7 +134,8 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_THROTTLE_CLASSES": ("rest_framework.throttling.ScopedRateThrottle",),
     "DEFAULT_THROTTLE_RATES": {
-        "upload": "20/day",
+        "image_main": "1000/day",
+        "generate_link": "500/day",
     },
 }
 
@@ -144,7 +143,7 @@ REST_FRAMEWORK = {
 # Additional settings
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SERVER_PATH = env("SERVER_PATH")
+SERVER_PATH = os.environ.get("SERVER_PATH")
 
 
 # CORS settings
