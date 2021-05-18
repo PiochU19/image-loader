@@ -15,10 +15,8 @@ def get_resized_image(memory_uploaded_image, height):
     """
     img = PillowImage.open(memory_uploaded_image)
     og_width, og_height = img.size
-    print(img.size)
     proportions = height / og_height
     width = int(og_width * proportions)
-    print(f"{height} {width}")
     resized = img.resize((width, height), PillowImage.ANTIALIAS)
     thumb_io = BytesIO()
     resized.save(thumb_io, format=img.format)

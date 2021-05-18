@@ -46,7 +46,6 @@ class ImageMainSerializer(serializers.ModelSerializer):
             )
         for size in plan.get_allowed_sizes():
             in_memory_uploaded_file = get_resized_image(image, int(size))
-            print(in_memory_uploaded_file)
             Image.objects.create(
                 image_name=main_image, size=size, image=in_memory_uploaded_file
             )
